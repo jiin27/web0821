@@ -1,14 +1,13 @@
+<%@page import="org.sp.mybatisApp.domain.Board"%>
 <%@page import="java.util.List"%>
-<%@page import="org.sp.mybatisApp.repository.BoardDAO"%>
+<%@page import="org.sp.mybatisApp.repository.MySQLBoardDAO"%>
 <%@page import="org.sp.mybatisApp.util.Pager"%>
-<%@ page contentType="text/html; charset=utf-8"%>
-<%!
-	Pager pager=new Pager();
-	BoardDAO boardDAO = new BoardDAO();
-%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%!Pager pager=new Pager();
+	MySQLBoardDAO boardDAO = new MySQLBoardDAO();%>
 <%
 	//레코드 가져오기
-	List boardList=boardDAO.selectAll();
+	List<Board> boardList=boardDAO.selectAll();
 
 	pager.init(boardList, request);
 %>
@@ -54,15 +53,20 @@ $(function() {
 			<th>등록일</th>
 			<th>조회수</th>
 		</tr>
-		<%int num=pager.getNum(); %>
+		<%
+			int num=pager.getNum(); //페이지당 시작 번호
+			int curPos=pager.getCurPos(); //페이지당 시작 index
+		
+		%>
 		<% for(int i=1; i<pager.getPageSize();i++){ %>
 		<%if(num<1)break; %>
+		<%Board board=boardList.get(curPos++); %>
 		<tr>
 			<td><%=num-- %></td>
-			<td>Smith</td>
-			<td>50</td>
-			<td>50</td>
-			<td>50</td>
+			<td><a href="/board/content.jsp?board_idx=<%=board.getBoard_idx()%>"><%=board.getTitle() %></a></td>
+			<td><%=board.getWriter() %></td>
+			<td><%=board.getRegdate().substring(0, 10) %></td>
+			<td><%=board.getHit() %></td>
 		</tr>
 		<%} %>
 		
@@ -82,6 +86,6 @@ $(function() {
 		</tr>
 
 	</table>
-
+	<%@ include file="/inc/footer.jsp" %>
 </body>
 </html>

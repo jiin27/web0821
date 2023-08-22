@@ -8,13 +8,17 @@
 		MyBatis 프레임웍을 가리켜 SQL Mapper라 하며 Hibernate를 가리켜 ORM 이라 한다
 	 -->
 
-	<insert id="insert" parameterType="org.sp.mybatisApp.domain.Board">
+	<insert id="insert" parameterType="Board">
 		insert into board(title, writer, content) values(#{title}, #{writer}, #{content})
 	</insert>
 	
-	<!-- 레코드 한 건과 Java 객체 인스턴스 1개를 알아서 짝 지어준다고 하여 SQL Mapper라 한다 -->
+	<!-- 레코드 한 건과 Java 객체 인스턴스 1개를 알아서 짝 지어준다고 하여 SQL Mapper라 한다(sql문과 객체 인스턴스 1개를 짝지어줌) -->
 	<select id="selectAll" resultType="org.sp.mybatisApp.domain.Board">
 		select * from board order by board_idx desc
+	</select>
+	
+	<select id="select" parameterType="int" resultType="org.sp.mybatisApp.domain.Board"> <!-- parameterType: 파라미터 타입은 전송받을 데이터 타입/ 받을 데이터가 숫자 하나기 때문에 자료형 쓰면 됨. 하나 이상이면 객체 자료형을 써야함! resultType: 결과값을 넣을 곳-->
+		select * from board where board_idx=#{board_idx}
 	</select>
 	
 </mapper>

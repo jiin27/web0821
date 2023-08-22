@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.sp.mybatisApp.domain.Board;
-import org.sp.mybatisApp.repository.BoardDAO;
+import org.sp.mybatisApp.repository.MySQLBoardDAO;
 
 //글쓰기 요청을 처리하는 서블릿(jsp로 작성해도 상관 없지만, 공부목적)
 public class RegistServlet extends HttpServlet{
-	BoardDAO boardDAO = new BoardDAO();
+	MySQLBoardDAO boardDAO = new MySQLBoardDAO();
 	
 	//파라미터 받기
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
